@@ -4,6 +4,9 @@ import com.github.vatbub.common.core.Common;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
 import net.lingala.zip4j.model.ZipParameters;
+import org.apache.commons.io.FileUtils;
+import oshi.util.FileUtil;
+import sun.net.www.protocol.file.FileURLConnection;
 
 import java.io.File;
 import java.io.IOException;
@@ -42,9 +45,11 @@ public class QuestionFile {
         getOriginalZipFile().extractAll(getTemporaryUnzipLocation());
 
         // read questions
-        for (File file : Objects.requireNonNull(Objects.requireNonNull(new File(getTemporaryUnzipLocation()).listFiles())[0].listFiles())) {
+        for (File file : Objects.requireNonNull(new File(getTemporaryUnzipLocation()).listFiles())) {
             getQuestions().add(Question.fromFile(file));
         }
+
+        close();
     }
 
     private ZipFile getOriginalZipFile() throws ZipException {
@@ -70,19 +75,25 @@ public class QuestionFile {
     }
 
     public void close() throws IOException {
-        Files.deleteIfExists(new File(getTemporaryUnzipLocation()).toPath());
+        File tempFolder = new File(getTemporaryUnzipLocation());
+        if (tempFolder.exists())
+            FileUtils.deleteDirectory(tempFolder);
     }
 
     public void save() throws IOException, ZipException {
+        File tempFolder = new File(getTemporaryUnzipLocation());
+        Files.createDirectory(tempFolder.toPath());
         for (Question question : getQuestions()) {
-            question.save(new File(getTemporaryUnzipLocation()).toPath().resolve(question.getTargetFileName()).toFile());
+            question.save(tempFolder.toPath().resolve(question.getTargetFileName()).toFile());
         }
 
         if (getOriginalFile().exists())
             Files.delete(getOriginalFile().toPath());
 
         ZipParameters zipParameters = new ZipParameters();
+        zipParameters.setIncludeRootFolder(false);
         getOriginalZipFile().createZipFileFromFolder(getTemporaryUnzipLocation(), zipParameters, false, 0);
+        close();
     }
 
     public Question createNewQuestion(Question.Types type) {
@@ -93,7 +104,7 @@ public class QuestionFile {
     }
 
     private int getNextId() {
-        int currentMax = Integer.MIN_VALUE;
+        int currentMax = 0;
         for (Question question : getQuestions()) {
             if (currentMax < question.getId())
                 currentMax = question.getId();

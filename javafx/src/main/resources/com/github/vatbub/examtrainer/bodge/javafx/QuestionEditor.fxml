@@ -19,7 +19,7 @@
                   <Button fx:id="deleteQuestionButton" mnemonicParsing="false" onAction="#deleteQuestionButtonOnAction" text="Delete question" />
               </items>
             </ToolBar>
-            <TableView maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+            <TableView fx:id="questionTable" maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
               <columns>
                 <TableColumn editable="false" minWidth="-1.0" prefWidth="75.0" text="ID" />
                 <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="447.0" text="Question" />

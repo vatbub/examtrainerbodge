@@ -28,7 +28,9 @@ public abstract class Question {
 
     protected static Question fromFile(File fileToRead) throws IOException {
         Properties properties = new Properties();
-        properties.load(new FileReader(fileToRead));
+        FileReader fileReader = new FileReader(fileToRead);
+        properties.load(fileReader);
+        fileReader.close();
 
         Types type = Types.valueOf(properties.getProperty(Keys.TYPE));
 

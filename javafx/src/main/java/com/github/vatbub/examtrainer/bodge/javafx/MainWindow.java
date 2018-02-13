@@ -31,7 +31,6 @@ public class MainWindow {
         File fileToSaveIn = showSaveAsDialog();
         if (fileToSaveIn == null) return;
         setCurrentFile(new QuestionFile(fileToSaveIn));
-        getCurrentFile().save();
     }
 
     private File showSaveAsDialog() {
@@ -60,8 +59,8 @@ public class MainWindow {
     }
 
     @FXML
-    void saveFileMenuItemOnAction(ActionEvent event) {
-
+    void saveFileMenuItemOnAction(ActionEvent event) throws IOException, ZipException {
+        getCurrentFile().save();
     }
 
     @FXML
@@ -90,8 +89,8 @@ public class MainWindow {
     }
 
     @FXML
-    void editQuestionsButtonOnAction(ActionEvent event) {
-
+    void editQuestionsButtonOnAction(ActionEvent event) throws IOException {
+        QuestionEditor.show(getCurrentFile());
     }
 
     public QuestionFile getCurrentFile() {
@@ -99,14 +98,14 @@ public class MainWindow {
     }
 
     public void setCurrentFile(QuestionFile currentFile) throws IOException {
-        if (getCurrentFile()!=null)
+        if (getCurrentFile() != null)
             getCurrentFile().close();
 
         this.currentFile = currentFile;
-        updateButtonEnabledStatus(currentFile==null);
+        updateButtonEnabledStatus(currentFile == null);
     }
 
-    private void updateButtonEnabledStatus(boolean isDisabled){
+    private void updateButtonEnabledStatus(boolean isDisabled) {
         launchExamButton.setDisable(isDisabled);
         editQuestionsButton.setDisable(isDisabled);
         saveFileMenuItem.setDisable(isDisabled);
