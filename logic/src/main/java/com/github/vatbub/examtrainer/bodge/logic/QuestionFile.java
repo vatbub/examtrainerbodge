@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class QuestionFile {
-    private static final String fileExtension = "etq";
+    public static final String fileExtension = "etq";
     private File originalFile;
     private List<Question> questions = new ArrayList<>();
 
@@ -31,15 +31,18 @@ public class QuestionFile {
     }
 
     private void createFile() throws IOException {
+        close();
         Files.createDirectory(new File(getTemporaryUnzipLocation()).toPath());
     }
 
     private void readFile() throws ZipException, IOException {
+        close();
+
         // Unzip
         getOriginalZipFile().extractAll(getTemporaryUnzipLocation());
 
         // read questions
-        for(File file : Objects.requireNonNull(new File(getTemporaryUnzipLocation()).listFiles())){
+        for (File file : Objects.requireNonNull(Objects.requireNonNull(new File(getTemporaryUnzipLocation()).listFiles())[0].listFiles())) {
             getQuestions().add(Question.fromFile(file));
         }
     }
@@ -66,13 +69,35 @@ public class QuestionFile {
         this.questions = questions;
     }
 
+    public void close() throws IOException {
+        Files.deleteIfExists(new File(getTemporaryUnzipLocation()).toPath());
+    }
+
     public void save() throws IOException, ZipException {
-        for(Question question:getQuestions()){
+        for (Question question : getQuestions()) {
             question.save(new File(getTemporaryUnzipLocation()).toPath().resolve(question.getTargetFileName()).toFile());
         }
 
-        Files.delete(getOriginalFile().toPath());
+        if (getOriginalFile().exists())
+            Files.delete(getOriginalFile().toPath());
 
-        getOriginalZipFile().createZipFileFromFolder(getTemporaryUnzipLocation(), new ZipParameters(), false, 0);
+        ZipParameters zipParameters = new ZipParameters();
+        getOriginalZipFile().createZipFileFromFolder(getTemporaryUnzipLocation(), zipParameters, false, 0);
+    }
+
+    public Question createNewQuestion(Question.Types type) {
+        Question res = Question.newInstance(type);
+        res.setId(getNextId());
+        getQuestions().add(res);
+        return res;
+    }
+
+    private int getNextId() {
+        int currentMax = Integer.MIN_VALUE;
+        for (Question question : getQuestions()) {
+            if (currentMax < question.getId())
+                currentMax = question.getId();
+        }
+        return currentMax + 1;
     }
 }

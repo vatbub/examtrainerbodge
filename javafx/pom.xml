@@ -34,4 +34,12 @@
         </plugins>
     </build>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.vatbub</groupId>
+            <artifactId>examtrainer.bodge.logic</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+
 </project>

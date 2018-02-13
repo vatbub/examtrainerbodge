@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.vatbub.examtrainer.bodge.javafx.QuestionEditor">
+   <children>
+      <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <ToolBar prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+              <items>
+                  <Button mnemonicParsing="false" onAction="#saveButtonOnAction" text="Save" />
+                <Button mnemonicParsing="false" onAction="#newQuestionButtonOnAction" text="New question" />
+                  <Button fx:id="editQuestionButton" mnemonicParsing="false" onAction="#editQuestionButtonOnAction" text="Edit question" />
+                  <Button fx:id="deleteQuestionButton" mnemonicParsing="false" onAction="#deleteQuestionButtonOnAction" text="Delete question" />
+              </items>
+            </ToolBar>
+            <TableView maxHeight="1.7976931348623157E308" VBox.vgrow="ALWAYS">
+              <columns>
+                <TableColumn editable="false" minWidth="-1.0" prefWidth="75.0" text="ID" />
+                <TableColumn editable="false" maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="447.0" text="Question" />
+              </columns>
+            </TableView>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

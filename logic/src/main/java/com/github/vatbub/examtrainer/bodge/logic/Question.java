@@ -12,12 +12,7 @@ public abstract class Question {
 
     public abstract void setCorrectAnswer(Answer correctAnswer);
 
-    protected static Question fromFile(File fileToRead) throws IOException {
-        Properties properties = new Properties();
-        properties.load(new FileReader(fileToRead));
-
-        Types type = Types.valueOf(properties.getProperty(Keys.TYPE));
-
+    protected static Question newInstance(Types type) {
         Question res = null;
 
         switch (type) {
@@ -28,6 +23,16 @@ public abstract class Question {
                 res = new TextQuestion();
                 break;
         }
+        return res;
+    }
+
+    protected static Question fromFile(File fileToRead) throws IOException {
+        Properties properties = new Properties();
+        properties.load(new FileReader(fileToRead));
+
+        Types type = Types.valueOf(properties.getProperty(Keys.TYPE));
+
+        Question res = newInstance(type);
 
         res.id = Integer.parseInt(properties.getProperty(Keys.ID));
         res.setQuestionText(properties.getProperty(Keys.QUESTION_TEXT));
@@ -85,6 +90,7 @@ public abstract class Question {
     }
 
     public abstract Types getType();
+
     protected abstract void parseAndSetCorrectAnswer(String stringToParse);
 
     protected void save(File fileToSaveIn) throws IOException {
@@ -102,6 +108,10 @@ public abstract class Question {
 
     protected String getTargetFileName() {
         return getId() + "." + fileExtension;
+    }
+
+    protected void setId(int id){
+        this.id = id;
     }
 
     public enum Types {
