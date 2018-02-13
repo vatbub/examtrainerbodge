@@ -22,7 +22,6 @@ package com.github.vatbub.examtrainer.bodge.logic.results;
 
 
 import com.github.vatbub.common.core.Common;
-import com.github.vatbub.examtrainer.bodge.logic.Question;
 import com.github.vatbub.examtrainer.bodge.logic.QuestionFile;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -44,6 +43,7 @@ public class ResultFile {
     private QuestionFile questionFile;
     private Map<Integer, Boolean> results;
     private File originalFile;
+    private int random = (int) (Math.random()*100000);
 
     public ResultFile(File file) throws IOException, ZipException {
         originalFile = file;
@@ -127,7 +127,7 @@ public class ResultFile {
     }
 
     private String getTemporaryUnzipLocation() {
-        return Common.getInstance().getAndCreateAppDataPathAsFile().toPath().resolve("results").resolve(getOriginalFile().getName().replace("." + fileExtension, "")).toAbsolutePath().toString();
+        return Common.getInstance().getAndCreateAppDataPathAsFile().toPath().resolve(Integer.toHexString(random)).toAbsolutePath().toString();
     }
 
     public Map<Integer, Boolean> getResults() {
