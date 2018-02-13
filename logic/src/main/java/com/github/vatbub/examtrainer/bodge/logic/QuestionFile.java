@@ -103,6 +103,14 @@ public class QuestionFile {
         return res;
     }
 
+    public boolean containsId(int id){
+        for(Question question:getQuestions()){
+            if (question.getId()==id)
+                return true;
+        }
+        return false;
+    }
+
     private int getNextId() {
         int currentMax = 0;
         for (Question question : getQuestions()) {

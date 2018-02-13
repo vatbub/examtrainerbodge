@@ -105,7 +105,9 @@ public abstract class Question {
         properties.setProperty(Keys.MARKED, Boolean.toString(isMarked()));
         properties.setProperty(Keys.CORRECT_ANSWER, getCorrectAnswer().toSaveString());
 
-        properties.store(new FileWriter(fileToSaveIn), "question file");
+        FileWriter fileWriter = new FileWriter(fileToSaveIn);
+        properties.store(fileWriter, "question file");
+        fileWriter.close();
     }
 
     protected String getTargetFileName() {
