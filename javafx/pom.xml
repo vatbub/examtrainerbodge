@@ -13,7 +13,7 @@
     <packaging>jar</packaging>
 
     <properties>
-        <mainClass>com.github.vatbub.tictactoe.view.Main</mainClass>
+        <mainClass>com.github.vatbub.examtrainer.bodge.javafx.EntryClass</mainClass>
     </properties>
 
     <build>
