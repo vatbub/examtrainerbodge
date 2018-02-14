@@ -1,6 +1,7 @@
 package com.github.vatbub.examtrainer.bodge.logic.results;
 
 import com.github.vatbub.common.core.logging.FOKLogger;
+import com.github.vatbub.examtrainer.bodge.logic.QuestionFile;
 import net.lingala.zip4j.exception.ZipException;
 
 import java.io.File;
@@ -122,6 +123,10 @@ public class ResultListFile {
 
     public void setOriginalFile(File originalFile) {
         this.originalFile = originalFile;
+    }
+
+    public QuestionFile getMasterQuestionFile(){
+        return getResultFiles().get(0).getQuestionFile();
     }
 
     private class ProcessedFileNameList extends ArrayList<String> {

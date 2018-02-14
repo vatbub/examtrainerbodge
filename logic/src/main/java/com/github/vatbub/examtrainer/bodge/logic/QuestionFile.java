@@ -38,7 +38,7 @@ public class QuestionFile {
     public static final String fileExtension = "etq";
     private File originalFile;
     private List<Question> questions = new ArrayList<>();
-    private int random = (int) (Math.random()*100000);
+    private int random = (int) (Math.random() * 100000);
 
     public QuestionFile(String fileToRead) throws ZipException, IOException {
         this(new File(fileToRead));

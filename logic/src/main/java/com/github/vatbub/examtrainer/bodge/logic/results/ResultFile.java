@@ -22,6 +22,7 @@ package com.github.vatbub.examtrainer.bodge.logic.results;
 
 
 import com.github.vatbub.common.core.Common;
+import com.github.vatbub.examtrainer.bodge.logic.Answer;
 import com.github.vatbub.examtrainer.bodge.logic.QuestionFile;
 import net.lingala.zip4j.core.ZipFile;
 import net.lingala.zip4j.exception.ZipException;
@@ -41,7 +42,7 @@ public class ResultFile {
     public static final String questionsFileName = "questions." + QuestionFile.fileExtension;
     public static final String resultsFileName = "results.properties";
     private QuestionFile questionFile;
-    private Map<Integer, Boolean> results;
+    private Map<Integer, Answer.EvaluationResult> results;
     private File originalFile;
     private int random = (int) (Math.random()*100000);
 
@@ -71,7 +72,7 @@ public class ResultFile {
         fileReader.close();
 
         for (Map.Entry<Object, Object> property : properties.entrySet()) {
-            getResults().put(Integer.parseInt((String) property.getKey()), Boolean.parseBoolean((String) property.getValue()));
+            getResults().put(Integer.parseInt((String) property.getKey()), Answer.EvaluationResult.valueOf((String) property.getValue()));
         }
 
         close();
@@ -93,8 +94,8 @@ public class ResultFile {
         // save results
         Properties properties = new Properties();
 
-        for (Map.Entry<Integer, Boolean> result : getResults().entrySet()) {
-            properties.put(result.getKey(), result.getValue());
+        for (Map.Entry<Integer, Answer.EvaluationResult> result : getResults().entrySet()) {
+            properties.put(result.getKey(), result.getValue().toString());
         }
 
         FileWriter fileWriter = new FileWriter(new File(getTemporaryUnzipLocation()).toPath().resolve(resultsFileName).toFile());
@@ -130,17 +131,17 @@ public class ResultFile {
         return Common.getInstance().getAndCreateAppDataPathAsFile().toPath().resolve(Integer.toHexString(random)).toAbsolutePath().toString();
     }
 
-    public Map<Integer, Boolean> getResults() {
+    public Map<Integer, Answer.EvaluationResult> getResults() {
         return results;
     }
 
-    public void setResults(Map<Integer, Boolean> results) {
+    public void setResults(Map<Integer, Answer.EvaluationResult> results) {
         this.results = results;
-        checkMapIndeces();
+        checkMapIndices();
     }
 
-    private void checkMapIndeces() {
-        for (Map.Entry<Integer, Boolean> res : getResults().entrySet()) {
+    private void checkMapIndices() {
+        for (Map.Entry<Integer, Answer.EvaluationResult> res : getResults().entrySet()) {
             if (!getQuestionFile().containsId(res.getKey()))
                 throw new IllegalArgumentException("Found question id in results that is not contained in the question file: " + res.getKey());
         }
@@ -152,6 +153,6 @@ public class ResultFile {
 
     private void setQuestionFile(QuestionFile questionFile) {
         this.questionFile = questionFile;
-        checkMapIndeces();
+        checkMapIndices();
     }
 }
