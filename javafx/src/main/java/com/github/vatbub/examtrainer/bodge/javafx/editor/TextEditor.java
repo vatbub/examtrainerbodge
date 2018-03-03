@@ -1,4 +1,4 @@
-package com.github.vatbub.examtrainer.bodge.javafx;
+package com.github.vatbub.examtrainer.bodge.javafx.editor;
 
 /*-
  * #%L

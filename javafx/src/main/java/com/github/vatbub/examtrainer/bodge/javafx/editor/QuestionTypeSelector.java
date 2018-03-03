@@ -1,4 +1,4 @@
-package com.github.vatbub.examtrainer.bodge.javafx;
+package com.github.vatbub.examtrainer.bodge.javafx.editor;
 
 /*-
  * #%L
@@ -22,9 +22,7 @@ package com.github.vatbub.examtrainer.bodge.javafx;
 
 
 import com.github.vatbub.examtrainer.bodge.logic.Question;
-import com.github.vatbub.examtrainer.bodge.logic.QuestionFile;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,7 +32,6 @@ import javafx.scene.control.ChoiceBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.Observable;
 
 public class QuestionTypeSelector {
     private TypeSelectorCallback callback;

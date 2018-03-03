@@ -1,4 +1,4 @@
-package com.github.vatbub.examtrainer.bodge.javafx;
+package com.github.vatbub.examtrainer.bodge.javafx.editor;
 
 /*-
  * #%L
@@ -35,7 +35,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import net.lingala.zip4j.exception.ZipException;
 
-import javax.swing.table.TableColumn;
 import java.io.IOException;
 
 public class QuestionEditor {
@@ -72,6 +71,7 @@ public class QuestionEditor {
         assert questionTable != null : "fx:id=\"questionTable\" was not injected: check your FXML file 'QuestionEditor.fxml'.";
     }
 
+    @SuppressWarnings("unchecked")
     public void reloadQuestions(){
         javafx.scene.control.TableColumn<Question, Integer> idCol = (javafx.scene.control.TableColumn<Question, Integer>) questionTable.getColumns().get(0);
         javafx.scene.control.TableColumn<Question, String> questionCol = (javafx.scene.control.TableColumn<Question, String>) questionTable.getColumns().get(1);

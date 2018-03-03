@@ -100,7 +100,13 @@ public class QuestionFile {
             FileUtils.deleteDirectory(tempFolder);
     }
 
+    public void save(File fileToSaveIn) throws IOException, ZipException {
+        originalFile = fileToSaveIn;
+        save();
+    }
+
     public void save() throws IOException, ZipException {
+        close();
         File tempFolder = new File(getTemporaryUnzipLocation());
         Files.createDirectory(tempFolder.toPath());
         for (Question question : getQuestions()) {
@@ -138,5 +144,11 @@ public class QuestionFile {
                 currentMax = question.getId();
         }
         return currentMax + 1;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj != null && obj instanceof QuestionFile && ((QuestionFile) obj).originalFile.equals(this.originalFile);
+
     }
 }

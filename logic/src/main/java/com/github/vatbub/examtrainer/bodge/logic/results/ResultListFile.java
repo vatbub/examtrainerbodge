@@ -28,8 +28,11 @@ public class ResultListFile {
 
     public ResultListFile(File fileToRead) throws IOException, ZipException {
         setOriginalFile(fileToRead);
-        if (fileToRead != null)
+        if (fileToRead != null && fileToRead.exists())
             readFile();
+        else{
+            setResultFiles(new ArrayList<>());
+        }
     }
 
     private void readFile() throws IOException, ZipException {
@@ -121,11 +124,17 @@ public class ResultListFile {
         return originalFile;
     }
 
-    public void setOriginalFile(File originalFile) {
+    private void setOriginalFile(File originalFile) {
         this.originalFile = originalFile;
     }
 
+    /**
+     * Returns the master question list
+     * @return The master question list or {@code null} if no results are containes in this result list file.
+     */
     public QuestionFile getMasterQuestionFile(){
+        if (getResultFiles().isEmpty())
+            return null;
         return getResultFiles().get(0).getQuestionFile();
     }
 

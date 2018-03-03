@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="184.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.vatbub.examtrainer.bodge.javafx.exam.RFExamDialog">
+
+    <children>
+        <VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
+            <children>
+                <Label fx:id="questionTextLabel" prefHeight="80.0" prefWidth="572.0" wrapText="true" />
+                <HBox alignment="CENTER" spacing="20.0">
+                    <children>
+                        <RadioButton fx:id="rightRadioButton" mnemonicParsing="false" text="Right">
+                            <toggleGroup>
+                                <ToggleGroup fx:id="answer" />
+                            </toggleGroup>
+                        </RadioButton>
+                        <RadioButton fx:id="wrongRadioButton" mnemonicParsing="false" text="Wrong" toggleGroup="$answer" />
+                    </children>
+                </HBox>
+                <HBox spacing="5.0">
+                    <children>
+                        <Button defaultButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#okButtonOnAction" text="OK" HBox.hgrow="ALWAYS" />
+                        <Button cancelButton="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cancelButtonOnAction" text="Cancel" HBox.hgrow="ALWAYS" />
+                  <ToggleButton fx:id="turboModeToggleButton" mnemonicParsing="false" text="Turbo Mode" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+    </children>
+
+</AnchorPane>
